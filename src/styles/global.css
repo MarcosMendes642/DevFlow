@@ -1,0 +1,256 @@
+/* ============================================================
+   DevFlow — GLOBAL CSS
+   Tokens + reset + base + primitivas compartilhadas
+   Páginas NÃO devem redefinir isto aqui, apenas consumir.
+   ============================================================ */
+
+:root {
+  /* ---------- Cores da marca ---------- */
+  --color-primary-300: #b9a5ff;
+  --color-primary-400: #9a84ff;
+  --color-primary-500: #8666ff; /* accent principal */
+  --color-primary-600: #6d4eff;
+  --color-primary-soft: rgba(134, 102, 255, 0.16);
+  --color-primary-glow: rgba(109, 78, 255, 0.35);
+
+  /* Feedback / status */
+  --color-success-400: #5fe5b6;
+  --color-success-500: #34d399;
+  --color-warning-500: #fbbf24;
+  --color-danger-500: #f87171;
+
+  /* Tons de fundo */
+  --color-bg: #08070e;
+  --color-bg-elevated: #0c0a15;
+  --color-surface: #100e1b;
+  --color-surface-2: #161428;
+  --color-surface-raised: #14121f;
+
+  /* Bordas */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Texto */
+  --color-text: #f2f1f7;
+  --color-text-secondary: #dcd9ea;
+  --color-text-muted: #a29fb4;
+  --color-text-faint: #7d7995;
+  --color-text-inverse: #ffffff;
+
+  /* ============================================================
+     TIPOGRAFIA
+     ============================================================ */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font-sans);
+  --font-hand: 'Caveat', cursive;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
+  --text-hero: clamp(2.6rem, 5.2vw, 4.3rem);
+
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  --leading-tight: 1.12;
+  --leading-snug: 1.4;
+  --leading-normal: 1.65;
+  --tracking-tight: -0.02em;
+  --tracking-tighter: -0.03em;
+
+  /* Espaçamento (base 4px) */
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Raios */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Sombras */
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 8px 28px var(--color-primary-glow);
+
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+img,
+svg {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--color-primary-500);
+  color: var(--color-text-inverse);
+}
+
+/* ============================================================
+   PRIMITIVAS COMPARTILHADAS (usam os tokens acima)
+   ============================================================ */
+.container {
+  width: min(1240px, 100% - 48px);
+  margin-inline: auto;
+}
+
+.text-accent {
+  color: var(--color-primary-500);
+}
+
+/* Texto com gradiente (títulos de destaque) */
+.grad-text {
+  background: linear-gradient(92deg, var(--color-primary-400) 10%, #6aa6ff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 13px 24px;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-base), border-color var(--transition-base);
+  white-space: nowrap;
+}
+.btn svg {
+  width: 17px;
+  height: 17px;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-glow);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-primary-300), var(--color-primary-500));
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-sm {
+  padding: 10px 20px;
+  font-size: var(--text-xs);
+}
+
+.btn-icon-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.14);
+  display: grid;
+  place-items: center;
+}
+.btn-icon-circle svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-strong);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+.badge svg {
+  width: 15px;
+  height: 15px;
+  color: var(--color-primary-500);
+}

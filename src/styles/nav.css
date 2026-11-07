@@ -1,0 +1,88 @@
+/* ============================================================
+   Navbar — estilos do componente Nav (compartilhado)
+   ============================================================ */
+@import './global.css';
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(8, 7, 14, 0.75);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav-inner {
+  width: min(1360px, 100% - 48px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-5) 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
+  color: var(--color-text-inverse);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-glow);
+}
+.brand-logo svg {
+  width: 20px;
+  height: 20px;
+}
+.brand-name {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 34px;
+}
+.nav-link {
+  position: relative;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  padding: 6px 0;
+  transition: color var(--transition-base);
+}
+.nav-link:hover {
+  color: var(--color-text);
+}
+.nav-link.is-active {
+  color: var(--color-text);
+  font-weight: var(--font-semibold);
+}
+.nav-link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-primary-500);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .nav-links {
+    display: none;
+  }
+}
