@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import '../styles/nav.css'
 
 const links = [
@@ -59,13 +60,13 @@ function Nav() {
         </nav>
 
         <div className="nav-actions">
-          <a className="btn btn-ghost btn-sm" href="#entrar">Entrar</a>
-          <a className="btn btn-primary btn-sm" href="#criar-conta">
+          <Link className="btn btn-ghost btn-sm" to="/entrar">Entrar</Link>
+          <Link className="btn btn-primary btn-sm" to="/cadastro">
             Criar conta
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </header>

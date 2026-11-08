@@ -1,0 +1,26 @@
+@import './global.css';
+@import './cadastro.css';
+
+/* ============================================================
+   LOGIN — reaproveita o layout do cadastro em card único
+   (estilos do cadastro de referência aplicados acima)
+   ============================================================ */
+
+.login-card {
+  width: min(920px, 100%);
+  padding: 0;
+}
+
+.login-titulo {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-extrabold);
+  line-height: 1.08;
+  margin: 0;
+}
+
+.login-sub {
+  margin-top: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-lg);
+  max-width: 26ch;
+}
