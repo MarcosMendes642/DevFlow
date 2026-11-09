@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { extrairUsuario, salvarUsuario } from "../utils/auth";
 import "../styles/cadastro.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export function Cadastro() {
+  const navigate = useNavigate();
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -76,6 +78,19 @@ export function Cadastro() {
       }
 
       setSucesso(data?.mensagem ?? "Usuário criado com sucesso!");
+
+      /* Se o cadastro já retornar token, entra direto no dashboard.
+         Senão, manda para o login para o usuário gerar o token. */
+      const token = data?.token ?? data?.accessToken ?? null;
+      if (token) {
+        localStorage.setItem("token", token);
+        // Dados da API têm prioridade; senão usa o que foi digitado
+        salvarUsuario(extrairUsuario(data) ?? { nome: nome.trim(), email });
+        navigate("/dashboard", { replace: true });
+        return;
+      }
+      salvarUsuario({ nome: nome.trim(), email });
+      navigate("/entrar", { replace: true });
       setNome("");
       setEmail("");
       setSenha("");

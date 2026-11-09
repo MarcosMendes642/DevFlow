@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { extrairUsuario, salvarUsuario, usuarioDoToken } from "../utils/auth";
 import "../styles/cadastro.css";
 import "../styles/login.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export function Login() {
+  const navigate = useNavigate();
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -50,7 +52,12 @@ export function Login() {
       }
 
       localStorage.setItem("token", token);
+
+      // Registra os dados do usuário: resposta da API ou payload do token
+      salvarUsuario(extrairUsuario(data) ?? usuarioDoToken(token));
+
       setSucesso("Login realizado!");
+      navigate("/dashboard", { replace: true });
      
     } catch {
       setErro("Erro de conexão com o servidor. O back está rodando?");

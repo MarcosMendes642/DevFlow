@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/home'
 import { Cadastro } from './pages/cadastro'
 import { Login } from './pages/login'
+import { Dashboard } from './pages/dashboard'
+import { ProtectRoute } from './components/ProtectRoute'
 
 function App() {
   return (
@@ -10,6 +12,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/entrar" element={<Login />} />
+        {/* Rotas protegidas — só passam com token no localStorage */}
+        <Route element={<ProtectRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>

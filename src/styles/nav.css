@@ -81,8 +81,46 @@
   gap: var(--space-4);
 }
 
+/* ============================================================
+   RESPONSIVO — navbar
+   No mobile os links somem, mas Entrar/Criar conta continuam,
+   compactados para caber na barra.
+   ============================================================ */
 @media (max-width: 720px) {
+  .nav-inner {
+    width: min(1360px, 100% - 24px);
+    gap: var(--space-2);
+    padding: var(--space-3) 0;
+  }
+
   .nav-links {
+    display: none;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+  .brand-logo svg {
+    width: 16px;
+    height: 16px;
+  }
+  .brand-name {
+    font-size: var(--text-base);
+  }
+
+  /* Botões mais compactos, sem a seta, para caber lado a lado */
+  .nav-actions {
+    gap: var(--space-2);
+  }
+  .nav-actions .btn {
+    padding: 8px 13px;
+    gap: 6px;
+  }
+  .nav-actions .btn svg {
     display: none;
   }
 }
