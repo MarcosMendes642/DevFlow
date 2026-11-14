@@ -3,9 +3,7 @@ import { useState } from "react";
 import "../styles/dashboard.css";
 import { carregarUsuario, inicialDoNome } from "../utils/auth";
 
-/* ============================================================
-   Ícones (SVG inline, estilo stroke — mesma linguagem do resto)
-   ============================================================ */
+
 function IconLogo() {
   return (
     <svg

@@ -1,4 +1,5 @@
 import Nav from '../components/Nav'
+import Footer from '../components/Footer'
 import Inicio from './sectionhome/Inico'
 import Recurso from './sectionhome/Recurso'
 import Recursos from './sectionhome/Recursos'
@@ -17,6 +18,7 @@ function Home() {
         <Recursos />
         <Sobre />
       </main>
+      <Footer />
     </>
   )
 }

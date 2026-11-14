@@ -246,8 +246,6 @@ function Recursos() {
                 <span>▤ Dashboard</span>
                 <span>▢ Projetos</span>
                 <span>☑ Tarefas</span>
-                <span>☷ Equipes</span>
-                <span>▲ Analytics</span>
               </div>
               <p className="cta-phone-hand">
                 <em>Bem-vindo de volta,</em>

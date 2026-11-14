@@ -103,6 +103,13 @@ function Recurso() {
                           <span className="avatars"><i /><i /><i /></span>
                         </div>
                       </div>
+                      <div className="kanban-card">
+                        <p>Design do onboarding</p>
+                        <div className="card-meta">
+                          <span className="tag tag-green">● Baixa</span>
+                          <span className="avatars"><i /><i /><i /></span>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="kanban-col">
@@ -114,12 +121,26 @@ function Recurso() {
                           <span className="avatars"><i /><i /><i /></span>
                         </div>
                       </div>
+                      <div className="kanban-card">
+                        <p>Refatorar autenticação</p>
+                        <div className="card-meta">
+                          <span className="tag tag-red">● Alta</span>
+                          <span className="avatars"><i /><i /><i /></span>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="kanban-col">
                       <header><span className="col-dot dot-green" /> Concluído <em>14</em></header>
                       <div className="kanban-card">
                         <p>Página de login</p>
+                        <div className="card-meta">
+                          <span className="tag tag-green">● Baixa</span>
+                          <span className="avatars"><i /><i /><i /></span>
+                        </div>
+                      </div>
+                      <div className="kanban-card">
+                        <p>Setup de CI/CD</p>
                         <div className="card-meta">
                           <span className="tag tag-green">● Baixa</span>
                           <span className="avatars"><i /><i /><i /></span>
