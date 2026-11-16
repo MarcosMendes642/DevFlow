@@ -10,11 +10,8 @@ function Home() {
     <>
       <Nav />
       <main>
-        {/* Início → hero + faixa de features */}
         <Inicio />
-        {/* Gerencie seus projetos (transição para Recursos) */}
         <Recurso />
-        {/* Recursos → grid de cards + CTA */}
         <Recursos />
         <Sobre />
       </main>

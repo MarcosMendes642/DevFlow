@@ -8,11 +8,7 @@ const links = [
   { label: 'Sobre', id: 'sobre' },
 ]
 
-/**
- * Navbar com scroll-spy: observa as seções da página (por id)
- * e destaca o link da seção que está no meio do viewport.
- * Lógica simples e provisória — ajuste como preferir.
- */
+
 function Nav() {
   const [active, setActive] = useState('inicio')
 

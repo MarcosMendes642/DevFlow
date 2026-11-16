@@ -1,7 +1,4 @@
-/* ============================================================
-   Sessão / usuário autenticado (localStorage)
-   Token salvo como "token" · dados do usuário como "usuario"
-   ============================================================ */
+
 
 export interface Usuario {
   nome: string;
@@ -10,7 +7,7 @@ export interface Usuario {
 
 const USUARIO_KEY = "usuario";
 
-/* ---------- Gravar / ler usuário ---------- */
+
 export function salvarUsuario(usuario: Usuario | null): void {
   if (!usuario || !usuario.nome) return;
   localStorage.setItem(
@@ -34,16 +31,12 @@ export function obterUsuario(): Usuario | null {
   }
 }
 
-/* ---------- Utilitários de tela ---------- */
+
 export function inicialDoNome(nome: string): string {
   return nome.trim().charAt(0).toUpperCase() || "U";
 }
 
-/**
- * Usuário para exibição: usa o salvo no localStorage e, se não houver
- * (ex.: sessão criada antes de salvar os dados), resgata do payload do
- * token JWT e persiste — evita cair no fallback "Usuário".
- */
+
 export function carregarUsuario(): Usuario | null {
   const salvo = obterUsuario();
   if (salvo) return salvo;
@@ -56,7 +49,7 @@ export function carregarUsuario(): Usuario | null {
   return usuario;
 }
 
-/* ---------- Extração dos dados do usuário ---------- */
+
 
 function primeiroTexto(...valores: unknown[]): string | null {
   for (const valor of valores) {
@@ -65,10 +58,7 @@ function primeiroTexto(...valores: unknown[]): string | null {
   return null;
 }
 
-/**
- * Procura nome/e-mail na resposta da API, aceitando vários formatos
- * (ex.: `{ token, usuario: { nome, email } }`, `{ name: ... }`, etc.).
- */
+
 export function extrairUsuario(data: unknown): Usuario | null {
   const raiz = data as Record<string, unknown> | null;
   if (!raiz || typeof raiz !== "object") return null;
@@ -106,16 +96,13 @@ export function extrairUsuario(data: unknown): Usuario | null {
   return null;
 }
 
-/**
- * Decodifica o payload de um token JWT para resgatar nome/e-mail,
- * usado quando a resposta de login só traz o token.
- */
+
 export function usuarioDoToken(token: string): Usuario | null {
   try {
     const parte = token.split(".")[1];
     if (!parte) return null;
 
-    // JWT usa base64url → converte para base64 padrão antes de decodificar
+   
     const base64 = parte.replace(/-/g, "+").replace(/_/g, "/");
     const preenchido = base64.padEnd(
       base64.length + ((4 - (base64.length % 4)) % 4),
@@ -133,7 +120,7 @@ export function usuarioDoToken(token: string): Usuario | null {
     if (!nome && !email) return null;
 
     return {
-      // Sem nome no payload, monta um a partir do e-mail ("marcos.souza" → "Marcos Souza")
+      
       nome: nome || (email ? capitalizar(email.split("@")[0].replace(/[._-]+/g, " ")) : ""),
       email: email ?? "",
     };

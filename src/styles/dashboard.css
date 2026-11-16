@@ -186,6 +186,136 @@
   color: var(--color-text-faint);
 }
 
+/* ---------- Menu do usuário (avatar / três pontos) ---------- */
+.dashboard-user-area,
+.dashboard-user-topo {
+  position: relative;
+}
+
+/* O bloco do usuário vira botão clicável */
+.dashboard-user-btn {
+  width: 100%;
+  padding: 4px 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: background var(--transition-base);
+}
+.dashboard-user-btn:hover,
+.dashboard-user-btn[aria-expanded="true"] {
+  background: var(--color-surface-2);
+}
+.dashboard-user-btn .dashboard-item-dots {
+  color: var(--color-text-faint);
+  transition: color var(--transition-base);
+}
+.dashboard-user-btn:hover .dashboard-item-dots,
+.dashboard-user-btn[aria-expanded="true"] .dashboard-item-dots {
+  color: var(--color-text);
+}
+
+/* Avatar do topbar clicável */
+.dashboard-avatar-btn {
+  border: none;
+  padding: 0;
+  background: linear-gradient(135deg, #f0a95e, #c96a3b);
+  font: inherit;
+  cursor: pointer;
+  transition: transform var(--transition-base), filter var(--transition-base);
+}
+.dashboard-avatar-btn:hover,
+.dashboard-avatar-btn[aria-expanded="true"] {
+  filter: brightness(1.08);
+  transform: scale(1.05);
+}
+
+.dashboard-menu-usuario {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 8px);
+  min-width: 210px;
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  z-index: 60;
+  animation: menuUsuarioIn 0.14s ease;
+}
+/* Quando aberto a partir do topbar, desce em vez de subir */
+.dashboard-menu-usuario.is-topo {
+  left: auto;
+  right: 0;
+  bottom: auto;
+  top: calc(100% + 10px);
+}
+@keyframes menuUsuarioIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-menu-usuario-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--space-2) var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+}
+.dashboard-menu-usuario-cabecalho strong {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text);
+}
+.dashboard-menu-usuario-cabecalho small {
+  color: var(--color-text-faint);
+}
+
+.dashboard-menu-usuario-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px var(--space-2);
+  border: none;
+  background: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+.dashboard-menu-usuario-item svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.dashboard-menu-usuario-item:hover {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+.dashboard-menu-usuario-item.is-perigo {
+  color: var(--color-danger-500);
+}
+.dashboard-menu-usuario-item.is-perigo:hover {
+  background: rgba(229, 72, 77, 0.08);
+  color: var(--color-danger-500);
+}
+
 /* ---------- Avatares ---------- */
 .dashboard-avatar {
   width: 34px;

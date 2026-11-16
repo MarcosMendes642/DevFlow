@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/dashboard.css";
 import { carregarUsuario, inicialDoNome } from "../utils/auth";
@@ -237,6 +238,39 @@ function IconPontos() {
   );
 }
 
+function IconPerfil() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 20c0-3.3 3.6-5 8-5s8 1.7 8 5" />
+    </svg>
+  );
+}
+
+function IconSair() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3" />
+      <path d="m16 17 5-5-5-5" />
+      <path d="M21 12H9" />
+    </svg>
+  );
+}
+
 /* ============================================================
    Dados estáticos (em breve virão da API)
    ============================================================ */
@@ -375,11 +409,93 @@ const coresAvatar: Record<string, string> = {
    Página: Dashboard (estrutura estática)
    ============================================================ */
 export function Dashboard() {
+  const navigate = useNavigate();
   /* Sidebar vira drawer no mobile, controlada pelo hamburger do topbar */
   const [sidebarAberta, setSidebarAberta] = useState(false);
+  /* Menu do usuário: aberto a partir do rodapé da sidebar ou do avatar do topbar */
+  const [menuUsuario, setMenuUsuario] = useState<"lateral" | "topo" | null>(
+    null,
+  );
+  const menuLateralRef = useRef<HTMLDivElement | null>(null);
+  const menuTopoRef = useRef<HTMLDivElement | null>(null);
   const usuario = carregarUsuario();
   const nomeUsuario = usuario?.nome || "Usuário";
   const inicialUsuario = inicialDoNome(nomeUsuario);
+
+  /* Fecha o menu ao clicar fora ou apertar Escape */
+  useEffect(() => {
+    if (!menuUsuario) return;
+
+    const aoClicarFora = (evento: MouseEvent) => {
+      const alvo = evento.target as Node;
+      const dentroLateral = menuLateralRef.current?.contains(alvo);
+      const dentroTopo = menuTopoRef.current?.contains(alvo);
+      if (!dentroLateral && !dentroTopo) setMenuUsuario(null);
+    };
+    const aoPressionarTecla = (evento: KeyboardEvent) => {
+      if (evento.key === "Escape") setMenuUsuario(null);
+    };
+
+    document.addEventListener("mousedown", aoClicarFora);
+    document.addEventListener("keydown", aoPressionarTecla);
+    return () => {
+      document.removeEventListener("mousedown", aoClicarFora);
+      document.removeEventListener("keydown", aoPressionarTecla);
+    };
+  }, [menuUsuario]);
+
+  /* Encerra a sessão e volta para a tela de login */
+  function sairDaConta() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    navigate("/entrar", { replace: true });
+  }
+
+  /* Conteúdo do menu (usado tanto no rodapé da sidebar quanto no topbar) */
+  function renderMenuUsuario(topo: boolean) {
+    return (
+      <div
+        className={`dashboard-menu-usuario${topo ? " is-topo" : ""}`}
+        role="menu"
+        aria-label="Menu do usuário"
+      >
+        <div className="dashboard-menu-usuario-cabecalho">
+          <span className="dashboard-avatar">{inicialUsuario}</span>
+          <span>
+            <strong>{nomeUsuario}</strong>
+            <small>{usuario?.email}</small>
+          </span>
+        </div>
+        <button
+          type="button"
+          role="menuitem"
+          className="dashboard-menu-usuario-item"
+          onClick={() => setMenuUsuario(null)}
+        >
+          <IconPerfil />
+          Meu perfil
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          className="dashboard-menu-usuario-item"
+          onClick={() => setMenuUsuario(null)}
+        >
+          <IconConfig />
+          Configurações
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          className="dashboard-menu-usuario-item is-perigo"
+          onClick={sairDaConta}
+        >
+          <IconSair />
+          Sair da conta
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard">
@@ -435,15 +551,27 @@ export function Dashboard() {
             <IconChevron />
           </button>
 
-          <div className="dashboard-user">
-            <span className="dashboard-avatar">{inicialUsuario}</span>
-            <span>
-              <strong>{nomeUsuario}</strong>
-              <small>{usuario?.email}</small>
-            </span>
-            <span className="dashboard-item-dots">
-              <IconPontos />
-            </span>
+          <div className="dashboard-user-area" ref={menuLateralRef}>
+            <button
+              type="button"
+              className="dashboard-user dashboard-user-btn"
+              aria-haspopup="menu"
+              aria-expanded={menuUsuario === "lateral"}
+              onClick={() =>
+                setMenuUsuario(menuUsuario === "lateral" ? null : "lateral")
+              }
+            >
+              <span className="dashboard-avatar">{inicialUsuario}</span>
+              <span>
+                <strong>{nomeUsuario}</strong>
+                <small>{usuario?.email}</small>
+              </span>
+              <span className="dashboard-item-dots">
+                <IconPontos />
+              </span>
+            </button>
+
+            {menuUsuario === "lateral" && renderMenuUsuario(false)}
           </div>
         </div>
       </aside>
@@ -488,7 +616,22 @@ export function Dashboard() {
           >
             <IconSino />
           </button>
-          <span className="dashboard-avatar dashboard-avatar-sm">{inicialUsuario}</span>
+          <div className="dashboard-user-topo" ref={menuTopoRef}>
+            <button
+              type="button"
+              className="dashboard-avatar dashboard-avatar-sm dashboard-avatar-btn"
+              aria-label="Menu do usuário"
+              aria-haspopup="menu"
+              aria-expanded={menuUsuario === "topo"}
+              onClick={() =>
+                setMenuUsuario(menuUsuario === "topo" ? null : "topo")
+              }
+            >
+              {inicialUsuario}
+            </button>
+
+            {menuUsuario === "topo" && renderMenuUsuario(true)}
+          </div>
         </header>
 
         {/* Conteúdo */}
